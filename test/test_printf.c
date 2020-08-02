@@ -41,7 +41,7 @@ int test_printf()
 	int   success = 0;
 
 	ft_printf("printf {\n");
-	TEST("1-Simple String.", 0);
+	TEST("1-Simple String.");
 	TEST("2-Stringception _%s_", "Hello World");
 	TEST("3-Stringception _%20s_", "Hello World");
 	TEST("4-Stringception _%-20s_", "Hello World");
@@ -55,41 +55,41 @@ int test_printf()
 	TEST("C-Stringception _%-#20s_", "Hello World");
 	TEST("D-Integer _%hhi_", -61234);
 	TEST("E-Integer _%hhu_", -61234);
-	TEST("F-Integer _%hhhi_", -61234);
-	TEST("G-Integer _%hhhu_", -61234);
-	TEST("H-Integer _%hhhhi_", -61234);
-	TEST("I-Integer _%hhhhu_", -61234);
-	TEST("J-Integer [p] _%#.10hhhx_", -61234);
+	TEST("F-Integer _%hi_", -61234);
+	TEST("G-Integer _%hu_", -61234);
+	TEST("H-Integer _%i_", -61234);
+	TEST("I-Integer _%u_", -61234);
+	TEST("J-Integer _%#.10hx_", -61234);
 	TEST("K-Integer _%lX_", 0xDEADBEEF);
 	TEST("L-Pointer _%p_", &pf);
 	TEST("M-Pointer _%hhp_", &pf);
-	TEST("N-Pointer _%p_", &pf);
-	TEST("O-Pointer _%hhp_", &pf);
+	TEST("N-Pointer _%hp_", &pf);
+	TEST("O-Pointer _%p_", &pf);
 	TEST("P-Combo _%20i_", -'*');
-	TEST("Q-Combo [lp]_%20.10i_", -'*');
-	TEST("R-Combo [p]_%.10i_", -'*');
-	TEST("S-Combo [l]_%020i_", -'*');
-	TEST("T-Combo [lp]_%#20.10x_", '*');
+	TEST("Q-Combo _%20.10i_", -'*');
+	TEST("R-Combo _%.10i_", -'*');
+	TEST("S-Combo _%020i_", -'*');
+	TEST("T-Combo _%#20.10x_", '*');
 	TEST("U-Combo _%-20i_", -'*');
 	TEST("V-Combo _%-20.10i_", -'*');
 	TEST("W-Combo _%-.10i_", -'*');
 	TEST("X-Combo _%-020i_", -'*');
 	TEST("Y-Combo _%-#20.10x_", '*');
-	TEST("Z-Combo _%s_", "Helloλ");
+	TEST("Z-Non ASCII string _%s_", "Helloλ");
 	TEST("10-NULL string _%s_", NULL);
 	TEST("11-NULL string _%4s_", NULL);
 	TEST("12-NULL string _%.4s_", NULL);
 	TEST("13-NULL string _%S_", NULL);
 	TEST("14-NULL string _%4S_", NULL);
-	TEST("15-NULL string _%l.4s_", NULL);
-	TEST("16-Bonus _%-2147483648.99h+08h#.04i_", '*');
+	TEST("15-NULL string _%.4ls_", NULL);
+	TEST("16-Bonus _%# -2147483648.99+08.04hi_", '*');
 	TEST("17-Nothing _%20.10", 0);
 	TEST("18-Nothing _%20.10__%i", 0, 42);
 	TEST("19-Nothing _%20.10&_", 0);
 	TEST("1A-Nothing _%20.10@_", 0);
 	TEST("1B-Nothing _%20.10`_", 0);
 	TEST("1C-Nothing _%20.10%_", 0);
-	TEST("1D-Number _%015#X_", 0xDEADBEEF);
+	TEST("1D-Number _%#015X_", 0xDEADBEEF);
 	TEST("1E-Zero _%+i_", 0);
 	TEST("1F-Zero _%0+i_", 0);
 	TEST("1G-Zero _%.0+i_", 0);
@@ -105,16 +105,16 @@ int test_printf()
 	TEST("1Q-%", 0);
 	TEST("1R-%.0z", 0);
 	TEST("1S-Zero _%010.0+#o_", 0);
-	TEST("1T-Advanced _%#p_%10#p_%.5#p_%10.5#p_%010#p_", -42, -42, -42, -42, -42);
+	TEST("1T-Advanced _%#p_%#10p_%#.5p_%#10.5p_%#010p_", -42, -42, -42, -42, -42);
 	TEST("1U-Zero %#x", 0);
 	TEST("1V-Zero %#.x %#.0x", 0, 0);
 	TEST("1W-Wide char %C", 0x0065);
 	TEST("1X-Hexa a%xb%xc%xd", 0, 55555, 1000000);
 	TEST("1Y-Hexa a%Xb%Xc%Xd", 0, 55555, 1000000);
 	TEST("1Z-Octal a%ob%oc%od", 0, 55555, 1000000);
-	TEST("20-Octal _%o_%#o_%0o_%0#o_%.0o_%.0#o_%0.0o_%0.0#o_", 0, 0, 0, 0, 0, 0, 0, 0);
-	TEST("21-Pointers _%p_%#p_%0p_%0#p_%.0p_%.0#p_%0.0p_%0.0#p_", 0, 0, 0, 0, 0, 0, 0, 0);
-	TEST("22-Pointers _%p_%#p_%0p_%0#p_%.0p_%.0#p_%0.0p_%0.0#p_", -42, -42, -42, -42, -42, -42, -42, -42);
+	TEST("20-Octal _%o_%#o_%0o_%0#o_%.0o_%#.0o_%0.0o_%#0.0o_", 0, 0, 0, 0, 0, 0, 0, 0);
+	TEST("21-Pointers _%p_%#p_%0p_%0#p_%.0p_%#.0p_%0.0p_%#0.0p_", 0, 0, 0, 0, 0, 0, 0, 0);
+	TEST("22-Pointers _%p_%#p_%0p_%0#p_%.0p_%#.0p_%0.0p_%#0.0p_", -42, -42, -42, -42, -42, -42, -42, -42);
 	TEST("23-Wildcard _%*s_%*s_", 5, "Hello world", 50, "Hello world");
 	TEST("24-Wildcard _%.*s_%.*s_", 5, "Hello world", 50, "Hello world");
 	TEST("25-Wildcard _%*.*s_%*.*s_", 5, 5, "Hello world", 50, 50, "Hello world");
@@ -122,13 +122,16 @@ int test_printf()
 	TEST("27-Wildcard _%*.*s_%*.*s_", 50, -5, "Hello world", -5, 50, "Hello world");
 	TEST("28-Char {%05.c}", '!');
 	TEST("29-Char {%05.c}", 0);
+	TEST("2A-Char {%-05.c}", '!');
+	TEST("2B-Char {%05.2c}", '!');
+	TEST("2C-Char {%-05.2c}", '!');
 
 	int a, b, c, d, e, f;
 	ft_printf("\t~ Flag%nWooWo% %[% 20.010-5n]%n\n", &a, &b, &c);
 	printf("\t~ Flag%nWooWo% %[% 20.010-5n]%n\n", &d, &e, &f);
 	if (a != d || b != e || c != f)
-		ft_printf(
-		"%s\tFail: (Real,FT) (%i,%i) (%i,%i) (%i,%i)%s\n", COLOR(RED), d, a, e, b, f, c, COLOR(NORMAL));
+		ft_printf("%s\tFail: (Real,FT) (%i,%i) (%i,%i) (%i,%i)%s\n",
+				  COLOR(RED), d, a, e, b, f, c, COLOR(NORMAL));
 	else
 		success++;
 	total++;
