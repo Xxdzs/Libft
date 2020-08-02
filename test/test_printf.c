@@ -6,36 +6,38 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define TEST(FMT,...)													\
-	pf = asprintf(&pf_dst,FMT,##__VA_ARGS__);							\
-	ft = ft_asprintf(&ft_dst,FMT,##__VA_ARGS__);						\
-	if (ft != pf)														\
-		dprintf(2, "\t%sReturn value Real(%i vs %i)Yours%s\n",			\
-				COLOR(RED), pf, ft, COLOR(NORMAL));						\
-	if (pf >= 0 && ft >= 0)												\
-	{																	\
-		if (ft_strcmp(ft_dst, pf_dst))									\
-			dprintf(2, "%s\t|%s| (Real) vs\n\t|%s| (Yours)\n%s",		\
-					COLOR(RED), pf_dst, ft_dst, COLOR(NORMAL));			\
-		else															\
-		{																\
-			printf("\t[%s%s%s]\n",										\
-				   COLOR(GREEN), ft_dst, COLOR(NORMAL));				\
-			success++;													\
-		}																\
-	}																	\
-	if (pf >= 0) free(pf_dst);											\
-	if (ft >= 0) free(ft_dst);											\
+#define TEST(FMT, ...)                                                                            \
+	pf = asprintf(&pf_dst, FMT, ##__VA_ARGS__);                                                   \
+	ft = ft_asprintf(&ft_dst, FMT, ##__VA_ARGS__);                                                \
+	if (ft != pf)                                                                                 \
+		ft_printf("\t%sReturn value Real(%i vs %i)Yours%s\n", COLOR(RED), pf, ft, COLOR(NORMAL)); \
+	if (pf >= 0 && ft >= 0)                                                                       \
+	{                                                                                             \
+		if (ft_strcmp(ft_dst, pf_dst))                                                            \
+			ft_printf("%s\t|%s| (Real) vs\n\t|%s| (Yours)\n%s",                                   \
+			          COLOR(RED),                                                                 \
+			          pf_dst,                                                                     \
+			          ft_dst,                                                                     \
+			          COLOR(NORMAL));                                                             \
+		else                                                                                      \
+		{                                                                                         \
+			ft_printf("\t[%s%s%s]\n", COLOR(GREEN), ft_dst, COLOR(NORMAL));                       \
+			success++;                                                                            \
+		}                                                                                         \
+	}                                                                                             \
+	if (pf >= 0)                                                                                  \
+		free(pf_dst);                                                                             \
+	if (ft >= 0)                                                                                  \
+		free(ft_dst);                                                                             \
 	total++;
 
-
-int		test_printf()
+int test_printf()
 {
 	char* pf_dst;
 	char* ft_dst;
-	int	  pf;
-	int	  ft;
-	int   total = 0;
+	int   pf;
+	int   ft;
+	int   total   = 0;
 	int   success = 0;
 
 	ft_printf("printf {\n");
@@ -81,12 +83,12 @@ int		test_printf()
 	TEST("14-NULL string _%4S_", NULL);
 	TEST("15-NULL string _%l.4s_", NULL);
 	TEST("16-Bonus _%-2147483648.99h+08h#.04i_", '*');
-	TEST("17-Nothing _%20.10",0);
-	TEST("18-Nothing _%20.10__%i",0,42);
-	TEST("19-Nothing _%20.10&_",0);
-	TEST("1A-Nothing _%20.10@_",0);
-	TEST("1B-Nothing _%20.10`_",0);
-	TEST("1C-Nothing _%20.10%_",0);
+	TEST("17-Nothing _%20.10", 0);
+	TEST("18-Nothing _%20.10__%i", 0, 42);
+	TEST("19-Nothing _%20.10&_", 0);
+	TEST("1A-Nothing _%20.10@_", 0);
+	TEST("1B-Nothing _%20.10`_", 0);
+	TEST("1C-Nothing _%20.10%_", 0);
 	TEST("1D-Number _%015#X_", 0xDEADBEEF);
 	TEST("1E-Zero _%+i_", 0);
 	TEST("1F-Zero _%0+i_", 0);
@@ -95,15 +97,15 @@ int		test_printf()
 	TEST("1I-Zero _%10.0i_", 0);
 	TEST("1J-Zero _%10.0+u_", 0);
 	TEST("1K-Zero _%-10.0+i_", 0);
-	TEST("1L-Advanced _%i_%10i_%.5i_%10.5i_%010i_%.0i_",-42,-42,-42,-42,-42,0);
-	TEST("1M-Advanced _%u_%10u_%.5u_%10.5u_%010u_%.0u_",-42,-42,-42,-42,-42,0);
-	TEST("1N-Advanced _%#x_%10#x_%.5#x_%10.5#x_%010#x_%.0#x_",-42,-42,-42,-42,-42,0);
-	TEST("1O-Advanced _%#X_%10#X_%.5#X_%10.5#X_%010#X_%.0#X_",-42,-42,-42,-42,-42,0);
-	TEST("1P-Advanced _%#o_%10#o_%.5#o_%10.5#o_%010#o_%.0#o_",-42,-42,-42,-42,-42,0);
+	TEST("1L-Advanced _%i_%10i_%.5i_%10.5i_%010i_%.0i_", -42, -42, -42, -42, -42, 0);
+	TEST("1M-Advanced _%u_%10u_%.5u_%10.5u_%010u_%.0u_", -42, -42, -42, -42, -42, 0);
+	TEST("1N-Advanced _%#x_%10#x_%.5#x_%10.5#x_%010#x_%.0#x_", -42, -42, -42, -42, -42, 0);
+	TEST("1O-Advanced _%#X_%10#X_%.5#X_%10.5#X_%010#X_%.0#X_", -42, -42, -42, -42, -42, 0);
+	TEST("1P-Advanced _%#o_%10#o_%.5#o_%10.5#o_%010#o_%.0#o_", -42, -42, -42, -42, -42, 0);
 	TEST("1Q-%", 0);
 	TEST("1R-%.0z", 0);
 	TEST("1S-Zero _%010.0+#o_", 0);
-	TEST("1T-Advanced _%#p_%10#p_%.5#p_%10.5#p_%010#p_",-42,-42,-42,-42,-42);
+	TEST("1T-Advanced _%#p_%10#p_%.5#p_%10.5#p_%010#p_", -42, -42, -42, -42, -42);
 	TEST("1U-Zero %#x", 0);
 	TEST("1V-Zero %#.x %#.0x", 0, 0);
 	TEST("1W-Wide char %C", 0x0065);
@@ -121,19 +123,21 @@ int		test_printf()
 	TEST("28-Char {%05.c}", '!');
 	TEST("29-Char {%05.c}", 0);
 
-	int a,b,c,d,e,f;
+	int a, b, c, d, e, f;
 	ft_printf("\t~ Flag%nWooWo% %[% 20.010-5n]%n\n", &a, &b, &c);
-	printf(   "\t~ Flag%nWooWo% %[% 20.010-5n]%n\n", &d, &e, &f);
+	printf("\t~ Flag%nWooWo% %[% 20.010-5n]%n\n", &d, &e, &f);
 	if (a != d || b != e || c != f)
-		ft_printf("%s\tFail: (Real,FT) (%i,%i) (%i,%i) (%i,%i)%s\n",
-				  COLOR(RED), d,a,e,b,f,c, COLOR(NORMAL));
+		ft_printf(
+		"%s\tFail: (Real,FT) (%i,%i) (%i,%i) (%i,%i)%s\n", COLOR(RED), d, a, e, b, f, c, COLOR(NORMAL));
 	else
 		success++;
 	total++;
 
 	TEST("%s", "The End");
 	ft_printf("\t%s%i / %i%s tests passed\n}\n\n",
-			  (success == total ? COLOR(GREEN, BOLD) : COLOR(RED, BOLD)),
-			  success, total, COLOR(NORMAL));
+	          (success == total ? COLOR(GREEN, BOLD) : COLOR(RED, BOLD)),
+	          success,
+	          total,
+	          COLOR(NORMAL));
 	return (success == total);
 }
